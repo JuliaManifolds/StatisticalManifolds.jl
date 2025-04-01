@@ -34,17 +34,6 @@ end
 #Outer constructor methods
 
 
-
-
-
-
-
-
-
-
-
-
-
 struct Probability{T<:AbstractFloat} <: AbstractFloat 
     x::T
     function Probability(x::Number)
@@ -55,8 +44,6 @@ struct Probability{T<:AbstractFloat} <: AbstractFloat
     end
 end
 
-
-StatisticalModel(D::Function, M::AbstractManifold) = StatisticalModel(D, M, manifold_dimension(M))
 
 ### New Alias for structures in dependencies
 const CountablyDiscreteDistribution = Union{

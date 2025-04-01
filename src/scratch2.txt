@@ -1,0 +1,29 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+m = 100;s = sort!(vcat(quantile(Exponential(10),(1:m)/(m+1)),-quantile(Exponential(10),(1:m)/(m+1))));n = length(s)
+ppairs = SVector{Int(n*(n-1)/2)}([(s[i],s[j]) for i = 1:length(s) for j = (i+1):length(s)]);
+ prototype_batch = (zeros(length(ppairs),1));
+prob_batch5 = IntegralProblem(BatchIntegralFunction(div_batch5, prototype_batch), domain)
+sol_batch5 = solve(prob_batch5, CubatureJLh())
+
+dists = zeros(n,n);
+for i = 1:n
+    for j = (i+1):n
+        ind = Int((n*(n-1) - (n-i)*(n-i+1))/2 + j -i)
+        #println((i,j,ind))
+        #println((i,j,ind))
+        dists[i,j] = dists[j,i] = sol_batch5.u[ind]
+    end
+end
+M2 = fit(MDS,dists;maxoutdim=3,distances=true);Y2 = predict(M2)
