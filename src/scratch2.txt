@@ -7,7 +7,18 @@
 
 
 
-
+function div_batch5(y,u,p)
+    #tmp = zeros(length(u))
+    #u = big.(v)
+    for i = 1:length(ppairs)
+        P(x) = pdf(d(ppairs[i][1],1),x)
+        Q(x) = pdf(d(ppairs[i][2],1),x)
+        Threads.@threads for j = 1:length(u)
+            #@. tmp[j] = log(10,P(big(@view(u[j])))/Q(big(@view(u[j]))))*P(big(@view(u[j])))
+            y[i,j] = @.  log(10,P(big(@view(u[j])))/Q(big(@view(u[j]))))*P(big(@view(u[j])))
+        end
+    end
+end
 
 
 
